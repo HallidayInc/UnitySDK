@@ -39,7 +39,7 @@ public class Walkthrough : MonoBehaviour
             {
                 break;
             }
-            await Task.Delay(10000);
+            await Task.Delay(3000);
         }
         string PLAYER_ID_1 = "INSERT_PLAYER_ID";
         var player1Wallet = await getPlayerWallet(PLAYER_ID_1);
@@ -53,7 +53,7 @@ public class Walkthrough : MonoBehaviour
             {
                 break;
             }
-            await Task.Delay(10000);
+            await Task.Delay(3000);
         }
         string PLAYER_ID_2 = "INSERT_PLAYER_ID";
         var player2Wallet = await getPlayerWallet(PLAYER_ID_2);
