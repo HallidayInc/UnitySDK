@@ -21,7 +21,6 @@ public class Walkthrough : MonoBehaviour
     void Awake()
     {
         hallidayClient = GetComponent<HallidayClient>();
-        Debug.Log(hallidayClient);
     }
 
     // Start is called before the first frame update
@@ -71,9 +70,9 @@ public class Walkthrough : MonoBehaviour
         await displayBalances(PLAYER_ID_2);
 
         //Execute some operations (note that these are sent from playerId2 because we are currently signed into player 2 and player 2 will be signing the transaction)
-        const string test_erc20_contract_address = "INSERT_HEX_ADDRESS"; // Aave - can change to different erc20 contract
+        const string test_erc20_contract_address = "0xf14f9596430931e177469715c591513308244e8f"; // Aave - can change to different erc20 contract
         const string test_erc721_contract_address = "INSERT_HEX_ADDRESS"; // enter sample NFT contract address
-        BigInteger test_erc721_token_id = 7032;
+        BigInteger test_erc721_token_id = 7032; //change as needed
 
 
         // Send MUMBAI matic from player 2 to player 1
