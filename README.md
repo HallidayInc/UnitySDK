@@ -1,6 +1,6 @@
 <p align="center">
 <br />
-<a href="https://halliday.xyz"><img src="https://github.com/HallidayInc/UnitySDK/blob/master/hallidayLogo.svg" width="200" alt=""/></a>
+<a href="https://halliday.xyz"><img src="https://github.com/HallidayInc/UnitySDK/blob/master/hallidayLogo.svg" width="150" alt=""/></a>
 <br />
 </p>
 <h1 align="center">Halliday Unity SDK</h1>
