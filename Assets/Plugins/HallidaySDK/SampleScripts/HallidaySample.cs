@@ -14,7 +14,7 @@ using Nethereum.Util;
 using Nethereum.ABI;
 using System.IO;
 
-[RequireComponent(typeof(Web3Auth))]
+[RequireComponent(typeof(HallidayClient))]
 public class HallidaySample : MonoBehaviour
 {
     HallidayClient hallidayClient;
@@ -27,7 +27,7 @@ public class HallidaySample : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hallidayClient.Initialize("INSERT_HALLIDAY_KEY", BlockchainType.MUMBAI, true);
+        hallidayClient.Initialize("INSERT_HALLIDAY_API_KEY", BlockchainType.MUMBAI, true);
         hallidayClient.logInWithGoogle();
         test();
         // task.Wait();
@@ -43,12 +43,12 @@ public class HallidaySample : MonoBehaviour
             }
             await Task.Delay(10000);
         }
-        const string ID1 = "INSERT_ID";
-        const string ID2 = "INSERT_ID";
+        const string PLAYER_ID_1 = "INSERT_PLAYER_ID_FOR_PLAYER_1";
+        const string PLAYER_ID_2 = "INSERT_PLAYER_ID_FOR_PLAYER_2";
 
         // Initial Properties
-        await displayPlayerInfo(1, ID1);
-        await displayPlayerInfo(2, ID2);
+        await displayPlayerInfo(1, PLAYER_ID_1);
+        await displayPlayerInfo(2, PLAYER_ID_2);
 
 
         const string test_erc20_contract_address = "INSERT_HEX_ADDRESS";
@@ -58,8 +58,8 @@ public class HallidaySample : MonoBehaviour
 
         Debug.Log("Native Token Transfer: ");
         var nativeBalanceTransferTxInfo = await hallidayClient.transferBalance(
-            from_in_game_player_id: ID2,
-            to_in_game_player_id: ID1,
+            from_in_game_player_id: PLAYER_ID_2,
+            to_in_game_player_id: PLAYER_ID_1,
             token_address: null,
             value: "0.025", blockchain_type:
             BlockchainType.MUMBAI,
@@ -70,8 +70,8 @@ public class HallidaySample : MonoBehaviour
 
         Debug.Log("ERC20 Token Transfer: ");
         var erc20BalanceTransferTxInfo = await hallidayClient.transferBalance(
-            from_in_game_player_id: ID2,
-            to_in_game_player_id: ID1,
+            from_in_game_player_id: PLAYER_ID_2,
+            to_in_game_player_id: PLAYER_ID_1,
             token_address: test_erc20_contract_address,
             value: "1000", blockchain_type:
             BlockchainType.MUMBAI,
@@ -81,8 +81,8 @@ public class HallidaySample : MonoBehaviour
 
         Debug.Log("Asset Transfer: ");
         var transferAssetTxInfo = await hallidayClient.transferAsset(
-            from_in_game_player_id: ID1,
-            to_in_game_player_id: ID2,
+            from_in_game_player_id: PLAYER_ID_2,
+            to_in_game_player_id: PLAYER_ID_1,
             collection_address: test_erc721_contract_address,
             token_id: test_erc721_token_id.ToString(),
             blockchain_type: BlockchainType.MUMBAI,
@@ -99,20 +99,20 @@ public class HallidaySample : MonoBehaviour
         //CcallContract Test
         var web3 = new Web3();
         // //Custom ERC 721 Transfer
-        // string abi = getAbiString("Assets/TestScripts/ERC271ABI.json");
+        // string abi = getAbiString("Assets/Plugins/HallidaySDK/SampleScripts/ERC271ABI.json");
         // var contract = web3.Eth.GetContract(abi, test_erc721_contract_address);
         // var function = contract.GetFunction("transferFrom");
         // var calldata = function.GetData(new object[] { player2Address, player1Address, test_erc721_token_id });
 
         // // Custom ERC 20 Transfer
-        string abi = getAbiString("Assets/TestScripts/ERC20ABI.json");
+        string abi = getAbiString("Assets/Plugins/HallidaySDK/SampleScripts/ERC20ABI.json");
         var contract = web3.Eth.GetContract(abi, test_erc20_contract_address);
         var function = contract.GetFunction("transfer");
         var calldata = function.GetData(new object[] { player1Address, test_transfer_amount });
 
         Debug.Log("Custom Contract Call (ERC 20 Transfer): ");
         var callContractTxInfo = await hallidayClient.callContract(
-            from_in_game_player_id: ID2,
+            from_in_game_player_id: PLAYER_ID_2,
             target_address: test_erc20_contract_address,
             calldata: calldata,
             value: "0",
@@ -122,8 +122,8 @@ public class HallidaySample : MonoBehaviour
         Debug.Log(JsonConvert.SerializeObject(callContractTxInfo));
 
         // Final Properties
-        await displayPlayerInfo(1, ID1);
-        await displayPlayerInfo(2, ID2);
+        await displayPlayerInfo(1, PLAYER_ID_1);
+        await displayPlayerInfo(2, PLAYER_ID_2);
 
     }
 
