@@ -133,6 +133,9 @@ public class HallidayClient : MonoBehaviour
      */
     public void logOut()
     {
+        this.userInfo = null;
+        this.privateKey = null;
+        this.account = null;
         web3Auth.logout();
     }
 
