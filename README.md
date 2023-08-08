@@ -16,7 +16,7 @@ Note: The Nethereum DLL is included as part of the Unity Package, feel free to d
 
 # Build
 
-Add the HallidayClient script to a GameObject (if you attach the sample script, the HallidayClient script will be added automatically). Call the Initialize() function with your Halliday API key and use the Client's public API function to manage your user's blockchain actions.
+Add the HallidayClient script to a GameObject. Call the Initialize() function with your Halliday API key and use the Client's public API function to manage your user's blockchain actions.
 
 # Usage
 
@@ -97,6 +97,7 @@ var callContractTxInfo = await hallidayClient.callContract(
 
 ### Notes on Walkthrough
 
+- To build the walkthrough, add the Walkthrough script to your game object and run the game (HallidayClient script will automatically be added as it's a dependency)
 - Before running the walkthrough, specify the player ids wherever `INSERT_PLAYER_ID` is specified
 - The walkthrough will open 2 login screens (one login for Player 1, then logout, then another login for Player 2)
 - After you get the player wallets, send MATIC, Aave (or another ERC20 token), and NFTs to the wallet so you can test the transfer functions or your custom calls
