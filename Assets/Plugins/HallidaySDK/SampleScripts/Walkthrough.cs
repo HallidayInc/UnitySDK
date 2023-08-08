@@ -41,7 +41,7 @@ public class Walkthrough : MonoBehaviour
             }
             await Task.Delay(10000);
         }
-        string PLAYER_ID_1 = "INSERT_PLAYER_1_ID";
+        string PLAYER_ID_1 = "INSERT_PLAYER_ID";
         var player1Wallet = await getPlayerWallet(PLAYER_ID_1);
         Debug.Log(JsonConvert.SerializeObject(player1Wallet)); //Prints wallet content - use this info to transfer tokens to account address to enable next functions
         hallidayClient.logOut(); //logout first player
@@ -55,7 +55,7 @@ public class Walkthrough : MonoBehaviour
             }
             await Task.Delay(10000);
         }
-        string PLAYER_ID_2 = "INSERT_PLAYER_2_ID";
+        string PLAYER_ID_2 = "INSERT_PLAYER_ID";
         var player2Wallet = await getPlayerWallet(PLAYER_ID_2);
 
         //Prints wallet content - use this info to transfer tokens to account address to enable next functions 
@@ -69,7 +69,7 @@ public class Walkthrough : MonoBehaviour
         Debug.Log("Player 2 Balances: ");
         await displayBalances(PLAYER_ID_2);
 
-        //Execute some operations (note that these are sent from playerId2 because we are currently signed into player 2 and player 2 will be signing the transaction)
+        // Execute some operations(note that these are sent from playerId2 because we are currently signed into player 2 and player 2 will be signing the transaction)
         const string test_erc20_contract_address = "0xf14f9596430931e177469715c591513308244e8f"; // Aave - can change to different erc20 contract
         const string test_erc721_contract_address = "INSERT_HEX_ADDRESS"; // enter sample NFT contract address
         BigInteger test_erc721_token_id = 7032; //change as needed
@@ -85,6 +85,7 @@ public class Walkthrough : MonoBehaviour
             BlockchainType.MUMBAI,
             sponsor_gas: true
         );
+
         // Transaction may take around ~20 seconds
         Debug.Log(JsonConvert.SerializeObject(nativeBalanceTransferTxInfo));
 
@@ -115,15 +116,15 @@ public class Walkthrough : MonoBehaviour
         // Transaction may take around ~20 seconds
         Debug.Log(JsonConvert.SerializeObject(transferAssetTxInfo));
 
-        // Custom Contract Call (upload ABI and encode function data)
-        // Numerical (i.e uint256) values must be defined as integer types when creating callContract calldata 
+        // Custom Contract Call(upload ABI and encode function data)
+        // Numerical(i.e uint256) values must be defined as integer types when creating callContract calldata
         BigInteger test_transfer_amount = 1000;
         string player1Address = player1Wallet.account_address;
         string player2Address = player2Wallet.account_address;
 
-        var web3 = new Web3();
+        Web3 web3 = new Web3();
 
-        // // Custom ERC 20 Transfer (similar to before except constructed manually)
+        // Custom ERC 20 Transfer (similar to before except constructed manually)
         string abi = getAbiString("Assets/Plugins/HallidaySDK/SampleScripts/ERC20ABI.json");
         var contract = web3.Eth.GetContract(abi, test_erc20_contract_address);
         var function = contract.GetFunction("transfer");
@@ -134,14 +135,15 @@ public class Walkthrough : MonoBehaviour
             from_in_game_player_id: PLAYER_ID_2,
             target_address: test_erc20_contract_address,
             calldata: calldata,
-            value: "1000",
+            value: "0",
             blockchain_type: BlockchainType.MUMBAI,
             sponsor_gas: true
         );
+
         // Transaction may take around ~20 seconds 
         Debug.Log(JsonConvert.SerializeObject(callContractTxInfo));
 
-        // //Custom ERC 721 Transfer (similar to before except constructed manually)
+        // // Custom ERC 721 Transfer(similar to before except constructed manually) - rename this variables or comment the other custom transfer creation to test
         // string abi = getAbiString("Assets/Plugins/HallidaySDK/SampleScripts/ERC271ABI.json");
         // var contract = web3.Eth.GetContract(abi, test_erc721_contract_address);
         // var function = contract.GetFunction("transferFrom");
@@ -163,19 +165,20 @@ public class Walkthrough : MonoBehaviour
     /// </summary>
     /// <param name="playerId"></param> In Game Player Id stored for this player
     /// 
-    private async Task<Wallet> getPlayerWallet(string playerId)
+    async Task<Wallet> getPlayerWallet(string playerId)
     {
-        return await hallidayClient.getOrCreateHallidayAAWallet(playerId);
+        Wallet playerWallet = await hallidayClient.getOrCreateHallidayAAWallet(playerId);
+        return playerWallet;
     }
 
     private async Task displayBalances(string playerId)
     {
         GetAssetsResponse getAssetsResponse = await hallidayClient.getAssets(playerId);
-        Debug.Log("Player Assets: ");
+        Debug.Log(playerId + " Player Assets: ");
         Debug.Log(JsonConvert.SerializeObject(getAssetsResponse));
 
         GetBalancesResponse getBalancesResponse = await hallidayClient.getBalances(playerId);
-        Debug.Log("Player Balances: ");
+        Debug.Log(playerId + " Player Balances: ");
         Debug.Log(JsonConvert.SerializeObject(getBalancesResponse));
     }
 

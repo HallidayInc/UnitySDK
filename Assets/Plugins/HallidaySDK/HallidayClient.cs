@@ -275,12 +275,11 @@ public class HallidayClient : MonoBehaviour
     public async Task<GetAssetsResponse> getAssets(string inGamePlayerId)
     {
         UnityWebRequest request;
-
         string getPlayerWalletsUrl = this.apiEndpoint + "client/accounts/" + inGamePlayerId + "/assets";
         request = UnityWebRequest.Get(getPlayerWalletsUrl);
         request.SetRequestHeader("Authorization", this.authHeaderValue);
-
         await sendRequestAndWait(request);
+
         var getAssetsResponse = JsonConvert.DeserializeObject<GetAssetsResponse>(request.downloadHandler.text);
         return getAssetsResponse;
     }
@@ -332,7 +331,7 @@ public class HallidayClient : MonoBehaviour
     /**
      * Transfer an NFT to another player within your game.
      *
-     * @param transfer asset params (TODO)
+     * @param transfer asset params 
      * @returns {string} tx id of the transaction. Poll getTransaction with this
      * id to see when the transaction is completed and to get the on-chain
      * transaction hash.
@@ -355,7 +354,7 @@ public class HallidayClient : MonoBehaviour
     /**
     * Transfer an ERC20 to another player within your game.
     *
-    * @param transfer balance params (TODO)
+    * @param transfer balance params 
     * @returns {string} tx id of the transaction. Poll getTransaction with this
     * id to see when the transaction is completed and to get the on-chain
     * transaction hash.
@@ -380,7 +379,7 @@ public class HallidayClient : MonoBehaviour
     /**
      * Call an arbitrary contract.
      *
-     * @param call contract params (TODO)
+     * @param call contract params 
      * @returns {string} tx id of the transaction. Poll getTransaction with this
      * id to see when the transaction is completed and to get the on-chain
      * transaction hash.
@@ -506,7 +505,7 @@ public class HallidayClient : MonoBehaviour
         return bytes;
     }
 
-    private static async Task sendRequestAndWait(UnityWebRequest request)
+    private async Task sendRequestAndWait(UnityWebRequest request)
     {
         var op = request.SendWebRequest();
         while (!op.isDone)
