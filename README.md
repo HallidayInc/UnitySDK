@@ -3,7 +3,6 @@
 <a href="https://halliday.xyz"><img src="https://github.com/HallidayInc/UnitySDK/blob/master/hallidayLogo.svg" width="100" alt=""/></a>
 </p>
 <h1 align="center">Halliday Unity SDK</h1>
-<br />
 
 # Installation
 
