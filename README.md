@@ -83,7 +83,7 @@ var web3 = new Web3();
 var contract = web3.Eth.GetContract(abi, test_erc20_contract_address);
 var function = contract.GetFunction("transfer");
 
-// Specify parameters according to function signature
+// Specify parameters according to abi function signature
 var calldata = function.GetData(new object[] { player1Address, test_transfer_amount });
 
 var callContractTxInfo = await hallidayClient.callContract(
