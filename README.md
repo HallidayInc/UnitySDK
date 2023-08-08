@@ -96,9 +96,11 @@ var callContractTxInfo = await hallidayClient.callContract(
 ```
 
 ### Notes on Walkthrough.cs
+
 - Before running the walkthrough, specify the player ids wherever it `INSERT_PLAYER_ID` is specified
-- After you get the player wallets, send MATIC, Aave (or another token), and NFTs to the wallet so you can test the transfer functions or your custom calls
+- After you get the player wallets, send MATIC, Aave (or another ERC20 token), and NFTs to the wallet so you can test the transfer functions or your custom calls
 - Replace the required addresses wherever `INSERT_HEX_ADDRESS` is specified
 
 ### Notes on General Usage
+
 - To enable current user management, you can build a singleton class on top of this component and expose the hallidayClient as a static instance
