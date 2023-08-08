@@ -76,9 +76,10 @@ BigInteger test_transfer_amount = 1000;
 string player1Address = player1Wallet.account_address;
 string player2Address = player2Wallet.account_address;
 
-var web3 = new Web3();
+
 // Custom ERC 20 Transfer (similar to before except constructed manually)
 // Import ABI as a Json and specify your target contract address
+var web3 = new Web3();
 var contract = web3.Eth.GetContract(abi, test_erc20_contract_address);
 var function = contract.GetFunction("transfer");
 
