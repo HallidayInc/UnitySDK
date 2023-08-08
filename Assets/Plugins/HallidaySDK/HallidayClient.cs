@@ -18,7 +18,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.Text;
 [RequireComponent(typeof(Web3Auth))]
-public class Web3Custom : MonoBehaviour
+public class HallidayClient : MonoBehaviour
 {
     Web3Auth web3Auth;
     private bool _isInitialized = false;

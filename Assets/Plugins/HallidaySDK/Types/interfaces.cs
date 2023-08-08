@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json.Linq;
+
 public enum BlockchainType
 {
     ETHEREUM,
@@ -175,5 +176,3 @@ public class SubmitTransactionResponse
     [JsonProperty(Required = Required.Always)]
     public string tx_id;
 }
-
-

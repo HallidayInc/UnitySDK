@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
@@ -16,20 +15,20 @@ using Nethereum.ABI;
 using System.IO;
 
 [RequireComponent(typeof(Web3Auth))]
-public class Web3CustomTest : MonoBehaviour
+public class HallidaySample : MonoBehaviour
 {
-    Web3Custom web3Custom;
+    HallidayClient hallidayClient;
     void Awake()
     {
-        web3Custom = GetComponent<Web3Custom>();
-        Debug.Log(web3Custom);
+        hallidayClient = GetComponent<HallidayClient>();
+        Debug.Log(hallidayClient);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        web3Custom.Initialize("INSERT_HALLIDAY_KEY", BlockchainType.MUMBAI, true);
-        web3Custom.logInWithGoogle();
+        hallidayClient.Initialize("INSERT_HALLIDAY_KEY", BlockchainType.MUMBAI, true);
+        hallidayClient.logInWithGoogle();
         test();
         // task.Wait();
     }
@@ -38,7 +37,7 @@ public class Web3CustomTest : MonoBehaviour
     {
         while (true)
         {
-            if (web3Custom.getUserInfo() != null)
+            if (hallidayClient.getUserInfo() != null)
             {
                 break;
             }
@@ -54,11 +53,11 @@ public class Web3CustomTest : MonoBehaviour
 
         const string test_erc20_contract_address = "INSERT_HEX_ADDRESS";
         const string test_erc721_contract_address = "INSERT_HEX_ADDRESS";
-        BigInteger test_erc721_token_id = 7032 // replace with your token id;
+        BigInteger test_erc721_token_id = 7032; // replace with your token id;
 
 
         Debug.Log("Native Token Transfer: ");
-        var nativeBalanceTransferTxInfo = await web3Custom.transferBalance(
+        var nativeBalanceTransferTxInfo = await hallidayClient.transferBalance(
             from_in_game_player_id: ID2,
             to_in_game_player_id: ID1,
             token_address: null,
@@ -70,7 +69,7 @@ public class Web3CustomTest : MonoBehaviour
 
 
         Debug.Log("ERC20 Token Transfer: ");
-        var erc20BalanceTransferTxInfo = await web3Custom.transferBalance(
+        var erc20BalanceTransferTxInfo = await hallidayClient.transferBalance(
             from_in_game_player_id: ID2,
             to_in_game_player_id: ID1,
             token_address: test_erc20_contract_address,
@@ -81,7 +80,7 @@ public class Web3CustomTest : MonoBehaviour
         Debug.Log(JsonConvert.SerializeObject(erc20BalanceTransferTxInfo));
 
         Debug.Log("Asset Transfer: ");
-        var transferAssetTxInfo = await web3Custom.transferAsset(
+        var transferAssetTxInfo = await hallidayClient.transferAsset(
             from_in_game_player_id: ID1,
             to_in_game_player_id: ID2,
             collection_address: test_erc721_contract_address,
@@ -112,7 +111,7 @@ public class Web3CustomTest : MonoBehaviour
         var calldata = function.GetData(new object[] { player1Address, test_transfer_amount });
 
         Debug.Log("Custom Contract Call (ERC 20 Transfer): ");
-        var callContractTxInfo = await web3Custom.callContract(
+        var callContractTxInfo = await hallidayClient.callContract(
             from_in_game_player_id: ID2,
             target_address: test_erc20_contract_address,
             calldata: calldata,
@@ -130,15 +129,15 @@ public class Web3CustomTest : MonoBehaviour
 
     private async Task displayPlayerInfo(int num, string ID)
     {
-        Wallet wallet = await web3Custom.getOrCreateHallidayAAWallet(ID);
+        Wallet wallet = await hallidayClient.getOrCreateHallidayAAWallet(ID);
         Debug.Log("Player " + num + "Wallet: ");
         Debug.Log(JsonConvert.SerializeObject(wallet));
 
-        GetAssetsResponse getAssetsResponse = await web3Custom.getAssets(ID);
+        GetAssetsResponse getAssetsResponse = await hallidayClient.getAssets(ID);
         Debug.Log("Player " + num + "Assets: ");
         Debug.Log(JsonConvert.SerializeObject(getAssetsResponse));
 
-        GetBalancesResponse getBalancesResponse = await web3Custom.getBalances(ID);
+        GetBalancesResponse getBalancesResponse = await hallidayClient.getBalances(ID);
         Debug.Log("Player " + num + "Balances: ");
         Debug.Log(JsonConvert.SerializeObject(getBalancesResponse));
     }
